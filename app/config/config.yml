@@ -67,6 +67,19 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+doctrine_cache:
+    providers:
+        my_markdown_cache:
+            file_system:
+                directory: %kernel.cache_dir%/markdown_cache
+
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            sluggable: true #before=> tree: true
+
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
