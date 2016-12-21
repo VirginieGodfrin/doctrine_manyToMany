@@ -168,4 +168,13 @@ class Genus
     public function setSlug($slug){
         $this->slug = $slug;
     }
+
+    public function addgenusScientist(User $user){
+
+        if($this->genusScientists->contains($user)){
+            return;
+        }
+
+        $this->genusScientists[] = $user;
+    }
 }

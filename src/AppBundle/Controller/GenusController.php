@@ -36,6 +36,11 @@ class GenusController extends Controller
         $genusNote->setCreatedAt(new \DateTime('-1 month'));
         $genusNote->setGenus($genus);
 
+        $user = $em -> getRepository('AppBundle:User')
+                ->findOneBy(['email'=>'aquanaut1@example.org']);
+
+        $genus->addgenusScientist($user);
+
         $em->persist($genus);
         $em->persist($genusNote);
         $em->flush();
