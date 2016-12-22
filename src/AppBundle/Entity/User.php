@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -73,6 +74,17 @@ class User implements UserInterface
      * @ORM\Column(type="string", nullable=true)
      */
     private $universityName;
+
+
+    /**
+     * @ORM\manyToMany(targetEntity="Genus", mappedBy="genusScientists")
+     * @ORM\OrderBy({"name" = "ASC"})
+     */
+    private $studiedGenuses;
+
+    public function __construct(){
+        $this->studiedGenuses = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -198,5 +210,9 @@ class User implements UserInterface
     public function getFullName()
     {
         return trim($this->getFirstName().' '.$this->getLastName());
+    }
+
+    public function getStudiedGenuses(){
+        return $this->studiedGenuses;
     }
 }

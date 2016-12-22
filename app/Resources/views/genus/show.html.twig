@@ -17,6 +17,17 @@
                 <dd>{{ genus.funFact|markdownify }}</dd>
                 <dt>Recent Notes</dt>
                 <dd>{{ recentNoteCount }}</dd>
+                <dt>Lead Scientists</dt>
+                <dd>
+                    <ul class="list-group">
+                        {% for gs in genus.genusScientists %}
+                            <li class="list-group-item">
+                                <a href="{{ path('user_show', {id:gs.id})}}"> {{ gs.fullName}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </dd>
+
             </dl>
         </div>
     </div>
