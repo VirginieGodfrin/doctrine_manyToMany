@@ -184,4 +184,11 @@ class Genus
     public function getGenusScientists(){
         return $this->genusScientists;
     }
+
+    
+    public function removeGenusScientist(User $user){
+
+        $this->genusScientists->removeElement($user);
+
+    }
 }
