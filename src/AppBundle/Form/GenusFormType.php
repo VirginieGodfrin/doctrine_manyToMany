@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class GenusFormType extends AbstractType
 {
@@ -43,14 +44,11 @@ class GenusFormType extends AbstractType
                 'attr' => ['class' => 'js-datepicker'],
                 'html5' => false,
             ])
-            ->add('genusScientists', EntityType::class,[
-                'class' => User::class,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => 'email',
-                'query_builder' => function(UserRepository $repo){
-                    return $repo->createIsScientistQueryBuilder();
-                }
+            ->add('genusScientists', CollectionType::class,[
+                'entry_type' => GenusScientistType::class,
+                'allow_delete' => true,
+                'allow_add' => true,
+                'by_reference' => false,
             ])
         ;
     }

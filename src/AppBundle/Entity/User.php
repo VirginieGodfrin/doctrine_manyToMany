@@ -75,10 +75,8 @@ class User implements UserInterface
      */
     private $universityName;
 
-
     /**
-     * @ORM\manyToMany(targetEntity="Genus", mappedBy="genusScientists")
-     * @ORM\OrderBy({"name" = "ASC"})
+     * @ORM\OneToMany(targetEntity="GenusScientist", mappedBy="user")
      */
     private $studiedGenuses;
 
@@ -212,7 +210,32 @@ class User implements UserInterface
         return trim($this->getFirstName().' '.$this->getLastName());
     }
 
+    /**
+     * @return ArrayCollection|GenusScientist[]
+     */
     public function getStudiedGenuses(){
         return $this->studiedGenuses;
     }
+
+    /*public function addStudiedGenus(Genus $genus){
+
+        if ($this->studiedGenuses->contains($genus)) {
+            return;
+        }
+
+        $this->studiedGenuses[] = $genus;
+        $genus->addGenusScientist($this);
+
+    }
+
+    public function removeStudiedGenus(Genus $genus){
+
+        if (!$this->studiedGenuses->contains($genus)) {
+            return;
+        }
+
+        $this->studiedGenuses->removeElement($genus);
+        $genus->removeGenusScientist($this);
+
+    }*/
 }

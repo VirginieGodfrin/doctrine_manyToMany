@@ -22,11 +22,12 @@ class UserEditForm extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('universityName')
-            ->add('studiedGenuses', EntityType::class,[
+            ->add('studiedGenuses', EntityType::class, [
                 'class' => Genus::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'by_reference' => false,
             ])
         ;
     }

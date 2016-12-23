@@ -69,10 +69,17 @@ class Genus
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="$studiedGenuses", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="genus_scientist")
+     * @ORM\OneToMany(
+     *      targetEntity="GenusScientist", 
+     *      mappedBy="genus", 
+     *      fetch="EXTRA_LAZY", 
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
      */
     private $genusScientists;
+
+
 
     public function __construct()
     {
@@ -169,26 +176,36 @@ class Genus
         $this->slug = $slug;
     }
 
-    public function addgenusScientist(User $user){
+    public function addgenusScientist(GenusScientist $genusScientist){
 
-        if($this->genusScientists->contains($user)){
+        if($this->genusScientists->contains($genusScientist)){
             return;
         }
 
-        $this->genusScientists[] = $user;
+        $this->genusScientists[] = $genusScientist;
+        // needed to update the owning side of the relationship!
+        $genusScientist->setGenus($this);
+        
     }
 
     /**
-     * @return ArrayCollection|User[]
+     * @return ArrayCollection|GenusScientist[]
      */
     public function getGenusScientists(){
         return $this->genusScientists;
     }
 
     
-    public function removeGenusScientist(User $user){
+    public function removeGenusScientist(GenusScientist $genusScientist)
+    {
+        if (!$this->genusScientists->contains($genusScientist)) {
+            return;
+        }
 
-        $this->genusScientists->removeElement($user);
-
+        $this->genusScientists->removeElement($genusScientist);
+        // needed to update the owning side of the relationship!
+        $genusScientist->setGenus(null);
     }
+
+
 }
