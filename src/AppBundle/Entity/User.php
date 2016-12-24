@@ -217,7 +217,7 @@ class User implements UserInterface
         return $this->studiedGenuses;
     }
 
-    /*public function addStudiedGenus(Genus $genus){
+    public function addStudiedGenus(Genus $genus){
 
         if ($this->studiedGenuses->contains($genus)) {
             return;
@@ -237,5 +237,5 @@ class User implements UserInterface
         $this->studiedGenuses->removeElement($genus);
         $genus->removeGenusScientist($this);
 
-    }*/
+    }
 }

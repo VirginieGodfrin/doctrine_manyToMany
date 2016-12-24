@@ -11,6 +11,9 @@ use AppBundle\Repository\UserRepository;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class GenusScientistType extends AbstractType
 {
     /**
@@ -28,8 +31,21 @@ class GenusScientistType extends AbstractType
                     }
 
                 ])
-            ->add('yearsStudied')       
+            ->add('yearsStudied')
+            ->addEventListener(
+                FormEvents::POST_SET_DATA,
+                array($this, 'onPostSetData')
+            )     
             ;
+    }
+
+    public function onPostSetData(FormEvent $event){
+        if ($event->getData() && $event->getData()->getId()){
+
+            $form = $event->getForm();
+            unset($form['user']);
+
+        }
     }
     
     /**

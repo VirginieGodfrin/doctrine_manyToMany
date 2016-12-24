@@ -7,6 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use Doctrine\Common\Collections\Criteria;
+use AppBundle\Repository\GenusRepository;
+
+
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenusRepository")
  * @ORM\Table(name="genus")
@@ -76,6 +80,7 @@ class Genus
      *      orphanRemoval=true,
      *      cascade={"persist"}
      * )
+     * @Assert\Valid()
      */
     private $genusScientists;
 
@@ -206,6 +211,27 @@ class Genus
         // needed to update the owning side of the relationship!
         $genusScientist->setGenus(null);
     }
+
+    public function getExpertScientists(){
+
+        /*return $this->getGenusScientists()
+            ->filter(function(GenusScientist $genusScientist) {
+                return $genusScientist->getYearsStudied() > 20;
+            });*/
+
+         /*$criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->gt('yearsStudied', 20))
+            ->orderBy(['yearsStudied', 'DESC']);
+
+        return $this->getGenusScientists()->matching($criteria);*/
+
+        return $this->getGenusScientists()->matching(
+            GenusRepository::createExpertCriteria()
+        );
+
+    }
+
+    
 
 
 }

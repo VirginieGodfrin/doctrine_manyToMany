@@ -19,6 +19,7 @@
                     </tr>
                     {% for genus in genuses %}
                         <tr>
+                            <td>{{ genus.genusScientists|length }}</td>
                             <td>{{ genus.name }}</td>
                             <td>{{ genus.subFamily.name }}</td>
                             <td>
